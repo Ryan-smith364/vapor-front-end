@@ -2,7 +2,7 @@ import React from 'react';
 // import Game from './GameCard'
 
 
-export default  class GameDisplay extends React.Component{
+export default  class GameDetails extends React.Component{
     render(){
         
     return ( 

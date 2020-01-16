@@ -1,6 +1,7 @@
 import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { Menu } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 export default class Head extends React.Component{
   render(){
@@ -8,33 +9,33 @@ export default class Head extends React.Component{
       <Header as='h2'>
       {/* <Icon name='settings' /> */}
       <Header.Content>
-        Vapor
+        <Link to='/'>Vapor</Link> 
         <Header.Subheader>For All You Gaming Needs</Header.Subheader>
       </Header.Content>
 
       <Menu>
         <Menu.Item
           name='search-games'
-          // active={activeItem === 'search-games'}
+  
           // onClick={this.handleItemClick}
         >
-          Search Games
+          <Link to='/search'>Search Games</Link>
         </Menu.Item>
 
         <Menu.Item
           name='users'
-          // active={activeItem === 'users'}
+
           // onClick={this.handleItemClick}
         >
-          Find A User
+          <Link to='/users'>Find A User</Link>
         </Menu.Item>
 
         <Menu.Item
           name='profile'
-          // active={activeItem === 'profile'}
+
           // onClick={this.handleItemClick}
         >
-          Profile
+           Profile
         </Menu.Item>
       </Menu>
 

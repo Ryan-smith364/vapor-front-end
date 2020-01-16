@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import GameSearch from '../components/Search'
-import GameDetails from '../components/GameDetails'
-import UserList from '../containers/UserList'
-import UserDetails from '../components/UserDetails'
-import Login from '../components/Login'
-import Home from '../components/Home'
+// import {Route, Switch} from 'react-router-dom'
+// import SearchContainer from '../components/SearchContainer'
+// import GameDetails from '../components/GameDetails'
+// import UserList from '../containers/UserList'
+// import UserDetails from '../components/UserDetails'
+// import Login from '../components/Login'
+// import Home from '../components/Home'
 
 
 // import SavedGames from '../containers/SavedGames'
@@ -65,18 +65,18 @@ export default  class MainView extends React.Component{
     
     return (
         <div>
-          <BrowserRouter>
-            <Switch>
+          <p>test</p>
+            {/* <Switch>
 
-                <Route path='/login' render={() => {   return <Login/>   }}/>
-                <Route path='/games/:name' render={() => {   return <GameDetails/>    }}/>
-                <Route path='/games/users/:id' render={() => {   return <UserDetails/>   }}/>
-                <Route path='/games/search' render={() => {   return <GameSearch/>    }}/> 
-                <Route path='/games/users' render={() => {   return <UserList/>   }}/>
+                <Route path='/login' render={ () => {   return <Login/>   }}/>
+                <Route path='/:name' render={ () => {   return <GameDetails/>    }}/>
+                <Route path='/users/:id' render={ () => {   return <UserDetails/>   }}/>
+                <Route path='/search' render={ () => {   return <SearchContainer/>}}/> 
+                <Route path='/users' render={() => {   return <UserList/>   }}/>
                 <Route path='/' render={() => {   return <Home/>   }}/>
 
-            </Switch>
-          </BrowserRouter>
+            </Switch> */}
+          
         </div>
     )
     
