@@ -1,8 +1,10 @@
 import React from 'react';
-// import GameSearch from '../components/Search'
-// import GameList from '../containers/GameList'
-// import GameDisplay from '../components/GameDetails'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import GameSearch from '../components/Search'
+import GameDisplay from '../components/GameDetails'
+import UserList from '../containers/UserList'
 // import SavedGames from '../containers/SavedGames'
+// import GameList from '../containers/GameList'
 
 export default  class MainView extends React.Component{
      
@@ -31,9 +33,7 @@ export default  class MainView extends React.Component{
           })
           .then(response => response.json())
           .then(game => console.log(game))
-          .catch(err => {
-            console.log(err);
-           });
+          
     
     }
 
@@ -56,13 +56,21 @@ export default  class MainView extends React.Component{
 
     
   render(){
-    debugger
+    
     return (
         <div>
-           
+          <BrowserRouter>
+            <Switch>
+                <Route path='/games/search' render={() => {   return <GameSearch/>    }}/> 
+                <Route path='/games/:id' render={() => {   return <GameDisplay/>    }}/>
+                <Route path='/games/users' render={() => {   return <UserList/>   }}/>
+                <Route path='/games/users/:id' render={() => {   return <UserList/>   }}/>
+              
+            </Switch>
+          </BrowserRouter>
         </div>
     )
-
+    
   }
-
+  
 }
