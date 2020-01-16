@@ -39,19 +39,7 @@ export default class Head extends React.Component{
       </Menu>
 
     </Header>
-        // <Header as='h2' icon='plug' content='Uptime Guarantee' >
-        //   <div> 
-        //     <p><i>Logo</i></p>
-        //   </div>
-        //   <div>
-        //     <h1>Vapor</h1>
-        //   </div>
-        //   <div>
-        //     <button>Search</button>
-        //     <button>Find User</button>
-        //     <button>Profile</button>
-        //   </div>
-        // </Header>
+
     )
 
   }

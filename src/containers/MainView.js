@@ -1,10 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import GameSearch from '../components/Search'
-import GameDisplay from '../components/GameDetails'
+import GameDetails from '../components/GameDetails'
 import UserList from '../containers/UserList'
+import UserDetails from '../components/UserDetails'
+import Login from '../components/Login'
+import Home from '../components/Home'
+
+
 // import SavedGames from '../containers/SavedGames'
 // import GameList from '../containers/GameList'
+
 
 export default  class MainView extends React.Component{
      
@@ -61,11 +67,14 @@ export default  class MainView extends React.Component{
         <div>
           <BrowserRouter>
             <Switch>
+
+                <Route path='/login' render={() => {   return <Login/>   }}/>
+                <Route path='/games/:name' render={() => {   return <GameDetails/>    }}/>
+                <Route path='/games/users/:id' render={() => {   return <UserDetails/>   }}/>
                 <Route path='/games/search' render={() => {   return <GameSearch/>    }}/> 
-                <Route path='/games/:id' render={() => {   return <GameDisplay/>    }}/>
                 <Route path='/games/users' render={() => {   return <UserList/>   }}/>
-                <Route path='/games/users/:id' render={() => {   return <UserList/>   }}/>
-              
+                <Route path='/' render={() => {   return <Home/>   }}/>
+
             </Switch>
           </BrowserRouter>
         </div>
