@@ -1,28 +1,24 @@
 import React from 'react';
+import { Card, Icon, Image } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 
 
 export default  class ApiGameCard extends React.Component{
   render(){
-    console.log(this.props.game)
+    
     return (
-        <div>
-           <Card>
-            <Image src='' wrapped ui={false} />
+        <div className="card">
+           <Card size="huge">
+            <Image src={this.props.game.background_image} wrapped ui={true} size='huge' />
             <Card.Content>
-              <Card.Header>Matthew</Card.Header>
+              <Card.Header onClick={ () => this.props.displayGame(this.props.game.slug)}>{this.props.game.name}</Card.Header>
               <Card.Meta>
-                <span className='date'>Joined in 2015</span>
+                <span className='date'>{this.props.game.released}</span>
               </Card.Meta>
               <Card.Description>
-                Matthew is a musician living in Nashville.
+                
               </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <a>
-                <Icon name='user' />
-                22 Friends
-              </a>
             </Card.Content>
           </Card>
         </div>

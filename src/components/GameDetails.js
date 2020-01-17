@@ -3,16 +3,17 @@ import React from 'react';
 
 
 export default  class GameDetails extends React.Component{
+    
     render(){
-        
-    return ( 
+        console.log(this.props.game)
+        return ( 
     
         <div>
-           
+           <h1> Gamer </h1>
         </div> 
         
-    ) 
+        ) 
 
-  }
+    }
 
 }

@@ -1,8 +1,6 @@
 import React from 'react'
-import SearcheGameList from '../containers/SearchedGameList'
+import GameList from '../components/SearchedGameList'
 import SearchForm from '../components/SearchForm'
-import GameDetails from '../components/GameDetails'
-import {Route, Switch} from 'react-router-dom'
 
 export default  class SearchContainer extends React.Component{
 
@@ -10,8 +8,7 @@ export default  class SearchContainer extends React.Component{
     super( )
 
     this.state = {
-      searchedGames: [],
-      currentGame: {}
+      searchedGames: []
     }
   }
 
@@ -53,13 +50,7 @@ fetchGameSearch = (search) =>{
 //         }
 //       })
 //         .then(response => response.json())
-//         .then(game => 
-
-//           <Switch>
-//              <Route path='/games/details' render={ () => <GameDetails game={game}/> } /> 
-//           </Switch>
-          
-//         )
+//         .then(game => console.log(game))
 //         .catch(err => {
 //             console.log(err);
 //         });
@@ -70,10 +61,10 @@ fetchGameSearch = (search) =>{
   return ( 
   
     <div>
-      <SearchForm search={this.searchForGames}/>
+    <SearchForm search={this.searchForGames}/>
 
-      <SearcheGameList games={this.state.searchedGames} displayGame={this.props.displayGame}/>
-    </div>
+    <GameList games={this.state.searchedGames} displayGame={this.props.displayGame} setCurrent={this.props.setCurrent}/>
+</div>
       
   ) 
 

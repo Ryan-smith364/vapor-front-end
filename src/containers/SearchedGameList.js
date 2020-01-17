@@ -6,8 +6,8 @@ export default class SearcheGameList extends React.Component{
   render(){
    
     return (
-       <div>
-          {this.props.games !== [] ? this.props.games.map( game => <ApiGameCard game={game}/>) : null }
+       <div className='ui grid'>
+          {this.props.games !== [] ? this.props.games.map( game => <ApiGameCard game={game} displayGame={this.props.displayGame} setCurrent={this.props.setCurrent}/> ): null }
        </div>
     )
 
