@@ -1,8 +1,7 @@
 import React from 'react'
 import SearcheGameList from '../containers/SearchedGameList'
 import SearchForm from '../components/SearchForm'
-import GameDetails from '../components/GameDetails'
-import {Route, Switch} from 'react-router-dom'
+
 
 export default  class SearchContainer extends React.Component{
 

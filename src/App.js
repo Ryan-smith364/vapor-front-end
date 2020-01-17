@@ -81,7 +81,7 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser => console.log(currentUser))
+  .then(currentUser => this.setState({currentUser}))
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
@@ -95,14 +95,21 @@ handleLogin = e => {
 
         <Switch>
 
-          <Route path='/search' render={ () => { return <SearchContainer setCurrent={this.setCurrent} displayGame={this.displayGame}/>}}/>
+          <Route path='/search' render={ () => { return <SearchContainer 
+            setCurrent={this.setCurrent} 
+            displayGame={this.displayGame}/>}
+          }/>
           <Route path='/users' component={UserList}/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange}
             handleLogin={this.handleLogin}
-            />}
+           />}
           />
+          <Route path='/profile' render={() => {return <UserDetails 
+              user={this.state.currentUser}/> 
+          }}/>
+
           <Route path='/:name' component={ GameDetails    }/>
           <Route path='/users/:id' component={ UserDetails }/>
           <Route path='/' render={() => {   return <Home/>   }}/>

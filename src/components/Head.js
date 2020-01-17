@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header} from 'semantic-ui-react';
-import { Menu, Input } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 export default class Head extends React.Component{
@@ -35,7 +35,7 @@ export default class Head extends React.Component{
 
           // onClick={this.handleItemClick}
         >
-           Profile
+           <Link to='/profile'>Profile</Link>
         </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
