@@ -3,14 +3,15 @@ import './App.css';
 import Head from './components/Head'
 // import MainView from './containers/MainView'
 import 'semantic-ui-css/semantic.min.css'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Redirect, Switch} from 'react-router-dom'
 import SearchContainer from './components/SearchContainer'
 import GameDetails from './components/GameDetails'
 import UserList from './containers/UserList'
 import UserDetails from './components/UserDetails'
 import Login from './components/Login'
 import Home from './components/Home'
-const URL_USERS = 'http://localhost:3000/users'
+import SignUp from './components/SignUp'
+const URL_USERS = 'http://localhost:3001/users'
 const URL_USER = 'http://localhost:3000/user'
 
 export default  class App extends React.Component{
@@ -33,14 +34,8 @@ displayGame = (title) => {
       }
     })
       .then(response => response.json())
-      .then(game => this.setState({currentGame: game})  )
-      .then(game => {return (
-
-        <Switch>
-          <Route path='/games/details/:id' render={ () => { return <GameDetails game={this.state.currentGame}/> }} />
-        </Switch>
-
-      )})
+      .then()
+      .then(currentGame => this.setState({currentGame}))
       .catch(err => {
           console.log(err);
       });
@@ -91,13 +86,19 @@ handleLogin = e => {
     return (
       <div className="App">
 
-        <Head />
+        <Head user={this.state.currentUser}/>
 
         <Switch>
 
-          <Route path='/search' render={ () => { return <SearchContainer 
-            setCurrent={this.setCurrent} 
-            displayGame={this.displayGame}/>}
+          <Route path='/search' render={ () => (this.state.currentGame === {}) ? 
+            <Redirect to={`/games/details/${this.state.currentGame.id}`}
+            render={ () =>  <GameDetails game={this.state.currentGame}/> }
+             /> 
+            :
+           <SearchContainer 
+            displayGame={this.displayGame}
+
+            />
           }/>
           <Route path='/users' component={UserList}/>
           <Route path='/login' render={ () => <Login
@@ -113,7 +114,7 @@ handleLogin = e => {
           <Route path='/:name' component={ GameDetails    }/>
           <Route path='/users/:id' component={ UserDetails }/>
           <Route path='/' render={() => {   return <Home/>   }}/>
-
+          <Route path='/signup' render={()=>  <SignUp/> }/>
         </Switch>
 
       </div>

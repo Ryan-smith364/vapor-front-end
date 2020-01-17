@@ -30,22 +30,29 @@ export default class Head extends React.Component{
           <Link to='/users'>Find A User</Link>
         </Menu.Item>
 
-        <Menu.Item
+        {this.props.user !== null ? <Menu.Item
           name='profile'
 
           // onClick={this.handleItemClick}
         >
            <Link to='/profile'>Profile</Link>
-        </Menu.Item>
+        </Menu.Item> : null}
+
         <Menu.Menu position='right'>
-          <Menu.Item>
+          {this.props.user !== null ? <Menu.Item>
+            <Link to='/logOut'>Login Out</Link>
+          </Menu.Item>:<Menu.Item>
             <Link to='/login'>Login</Link>
-          </Menu.Item>
-          <Menu.Item
-            name='Signup'
-            // active={activeItem === 'logout'}
-            onClick={this.props.handleSignup}
-          />
+          </Menu.Item>  }
+          {this.props.user === null ? 
+          <Menu.Item>
+            
+            {/* // active={activeItem === 'logout'} */}
+
+          <Link to='/signup'>SignUp</Link>
+            </Menu.Item>
+           : null }
+          
 
         </Menu.Menu>
       </Menu>
