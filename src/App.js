@@ -75,11 +75,7 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser => {
-    if (currentUser) {
-
-    }
-  })
+  .then(currentUser =>{ if (currentUser.message !== "user not found"){ this.setState({currentUser})}})
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
@@ -94,7 +90,7 @@ handleLastNameChange = e => {
 handleUsernameChangeSU = e => {
   console.log(e.currentTarget.value)
 }
-handlePasswordChangeSU = e => {
+handlePasswordChange = e => {
   console.log(e.currentTarget.value)
 }
 handleEmailChange = e => {
