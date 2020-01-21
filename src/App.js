@@ -20,6 +20,8 @@ export default  class App extends React.Component{
     currentUser: null,
     username: null,
     password: null,
+    first_name: null,
+    last_name: null,
   }
 
 displayGame = (title) => {
@@ -90,7 +92,7 @@ handleLastNameChange = e => {
 handleUsernameChangeSU = e => {
   console.log(e.currentTarget.value)
 }
-handlePasswordChange = e => {
+handlePasswordChangeSU = e => {
   console.log(e.currentTarget.value)
 }
 handleEmailChange = e => {
@@ -104,6 +106,10 @@ handleBirthdateChange = e => {
 }
 handleBioChange = e => {
   console.log(e.currentTarget.value)
+}
+handleSUChange = e => {
+  console.log(e.currentTarget.value)
+  this.setState({ [e.currentTarget.name]: e.currentTarget.value})
 }
 //doge
 hanleSignup = e => {
@@ -139,6 +145,7 @@ hanleSignup = e => {
            />}
           />
           <Route path='/signup' render={()=>  <SignUp
+            handleSUChange = {this.handleSUChange}
             handleFirstNameChange={this.handleFirstNameChange}
             handleLastNameChange={this.handleLastNameChange}
             handleUsernameChangeSU={this.handleUsernameChangeSU}

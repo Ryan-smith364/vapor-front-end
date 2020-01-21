@@ -33,14 +33,16 @@ class SignUp extends React.Component{
               control={Input}
               label='First name'
               placeholder='First name'
-              onChange={this.props.handleFirstNameChange}
+              name='first_name'
+              onChange={this.props.handleSUChange}
               required
             />
             <Form.Field
               control={Input}
               label='Last name'
               placeholder='Last name'
-              onChange={this.props.handleLastNameChange}
+              name='last_name'
+              onChange={this.props.handleSUChange}
               required
             />
           </Form.Group>
