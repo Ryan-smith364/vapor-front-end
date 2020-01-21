@@ -1,6 +1,7 @@
 import React from 'react'
 import SearcheGameList from '../containers/SearchedGameList'
 import SearchForm from '../components/SearchForm'
+import { Divider } from 'semantic-ui-react'
 
 
 export default  class SearchContainer extends React.Component{
@@ -70,6 +71,8 @@ fetchGameSearch = (search) =>{
   
     <div>
       <SearchForm search={this.searchForGames}/>
+
+      <Divider/>
 
       <SearcheGameList games={this.state.searchedGames} displayGame={this.props.displayGame}/>
     </div>

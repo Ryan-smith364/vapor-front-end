@@ -8,7 +8,7 @@ export default  class Home extends React.Component{
     return ( 
     
         <div>
-           
+           <h1> Welcome To Vapor </h1>
         </div> 
         
     ) 
