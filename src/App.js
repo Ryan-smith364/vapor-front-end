@@ -74,6 +74,7 @@ handlePasswordChange = e => {
 }
 
 handleLogin = e => {
+  console.log('Hitting login fetch')
   e.preventDefault()
   console.log('log me in please you MF developer ', e)
   const obj = {
@@ -98,10 +99,10 @@ handleFirstNameChange = e => {
 handleLastNameChange = e => {
   console.log(e.currentTarget.value)
 }
-handleUsernameChange = e => {
+handleUsernameChangeSU= e => {
   console.log(e.currentTarget.value)
 }
-handlePasswordChange = e => {
+handlePasswordChangeSU = e => {
   console.log(e.currentTarget.value)
 }
 handleAvatarChange = e => {
