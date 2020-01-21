@@ -88,7 +88,10 @@ class SignUp extends React.Component{
             control={Checkbox}
             label='I agree to the Terms and Conditions'
           />
-          <Form.Field control={Button}>Submit</Form.Field>
+          <Form.Field control={Button}
+            type='submit'
+          >Submit
+          </Form.Field>
         </Form>
       </Container>
     )

@@ -11,23 +11,15 @@ import UserDetails from './components/UserDetails'
 import Login from './components/Login'
 import Home from './components/Home'
 import SignUp from './components/SignUp'
-const URL_USERS = 'http://localhost:3000/users'
+const URL_USERS = 'http://localhost:3001/users'
 const URL_USER = 'http://localhost:3000/user'
 
 export default  class App extends React.Component{
   state = {
     currentGame: {},
-    selectedUser: null,
     currentUser: null,
     username: null,
     password: null,
-    userList: []
-  }
-
-  componentDidMount(){
-    fetch('http://localhost:3000/users')
-    .then(resp => resp.json())
-    .then(users => this.setState({userList: users}))
   }
 
 displayGame = (title) => {
@@ -42,19 +34,16 @@ displayGame = (title) => {
       }
     })
       .then(response => response.json())
+      .then()
       .then(currentGame => this.setState({currentGame}))
       .catch(err => {
           console.log(err);
-      })
+      });
 }
 
 // setCurrent = (game) => {
 //   this.setState({currentGame: game})
 // }
-
-viewUser = (selectedUser) => {
-  this.setState({selectedUser})
-}
 
 
 // start handleLogin
@@ -74,7 +63,6 @@ handlePasswordChange = e => {
 }
 
 handleLogin = e => {
-  console.log('Hitting login fetch')
   e.preventDefault()
   console.log('log me in please you MF developer ', e)
   const obj = {
@@ -87,7 +75,11 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser =>{ if (currentUser.message !== "user not found"){ this.setState({currentUser})}})
+  .then(currentUser => {
+    if (currentUser) {
+
+    }
+  })
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
@@ -99,10 +91,13 @@ handleFirstNameChange = e => {
 handleLastNameChange = e => {
   console.log(e.currentTarget.value)
 }
-handleUsernameChangeSU= e => {
+handleUsernameChangeSU = e => {
   console.log(e.currentTarget.value)
 }
 handlePasswordChangeSU = e => {
+  console.log(e.currentTarget.value)
+}
+handleEmailChange = e => {
   console.log(e.currentTarget.value)
 }
 handleAvatarChange = e => {
@@ -123,9 +118,6 @@ hanleSignup = e => {
 //end SignUp
 
   render(){
-
-      
-
     return (
       <div className="App">
 
@@ -133,17 +125,17 @@ hanleSignup = e => {
 
         <Switch>
 
-          <Route path={`/games/details/${this.state.currentGame.id}`} component={GameDetails} game={this.state.currentGame}/>
-          <Route path='/search' render={ () =>
-          //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
-          //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
-          //    /> 
-          //   :
-           <SearchContainer 
-            displayGame={this.displayGame}/>
+          <Route path='/search' render={ () => (this.state.currentGame === {}) ?
+            <Redirect to={`/games/details/${this.state.currentGame.id}`}
+            render={ () =>  <GameDetails game={this.state.currentGame}/> }
+             />
+            :
+           <SearchContainer
+            displayGame={this.displayGame}
+
+            />
           }/>
-          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
-          <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser}/> } />
+          <Route path='/users' component={UserList}/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange}
@@ -151,13 +143,23 @@ hanleSignup = e => {
            />}
           />
           <Route path='/signup' render={()=>  <SignUp
+            handleFirstNameChange={this.handleFirstNameChange}
+            handleLastNameChange={this.handleLastNameChange}
+            handleUsernameChangeSU={this.handleUsernameChangeSU}
+            handlePasswordChangeSU={this.handlePasswordChangeSU}
+            handleEmailChange={this.handleEmailChange}
+            handledAvatarChange={this.handledAvatarChange}
+            handledBioChange={this.handledBioChange}
+            handleBirthdateChange={this.handleBirthdateChange}
             hanleSignup={this.hanleSignup}
-            /> }/>
+            /> }
+          />
           <Route path='/profile' render={() => {return <UserDetails
               user={this.state.currentUser}/>
           }}/>
 
           <Route path='/:name' component={ GameDetails    }/>
+          <Route path='/users/:id' component={ UserDetails }/>
           <Route path='/' render={() => {   return <Home/>   }}/>
         </Switch>
 
