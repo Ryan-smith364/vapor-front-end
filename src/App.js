@@ -18,17 +18,19 @@ export default  class App extends React.Component{
   state = {
     
     currentGame: {},
-    selectedUser: null,
     currentUser: null,
     username: null,
     password: null,
-    userList: []
-  }
-
-  componentDidMount(){
-    fetch('http://localhost:3000/users')
-    .then(resp => resp.json())
-    .then(users => this.setState({userList: users}))
+    newUser: {
+      first_name: null,
+      last_name: null,
+      username: null,
+      password: null,
+      email: null,
+      birthdate: new Date(),
+      bio: null,
+      user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
+    }
   }
 
 displayGame = (title) => {
@@ -46,17 +48,12 @@ displayGame = (title) => {
       .then(currentGame => this.setState({currentGame}))
       .catch(err => {
           console.log(err);
-      })
+      });
 }
 
 // setCurrent = (game) => {
 //   this.setState({currentGame: game})
 // }
-
-viewUser = (selectedUser) => {
-  this.setState({selectedUser})
-}
-
 
 // start handleLogin
 handleUsernameChange = e => {
@@ -75,7 +72,6 @@ handlePasswordChange = e => {
 }
 
 handleLogin = e => {
-  console.log('Hitting login fetch')
   e.preventDefault()
   console.log('log me in please you MF developer ', e)
   const obj = {
@@ -88,38 +84,47 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser =>{ if (currentUser.message !== "user not found"){ this.setState({currentUser})}})
+  .then(currentUser =>{ if (currentUser.message !== "user not found"){    this.setState({currentUser})}})
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
 
 //handle SignUp
-handleFirstNameChange = e => {
+handleSUChange = e => {
+  // debugger
   console.log(e.currentTarget.value)
+  this.setState({ newUser: {
+    ...this.state.newUser,
+    [e.currentTarget.name]: e.currentTarget.value}
+  })
 }
-handleLastNameChange = e => {
-  console.log(e.currentTarget.value)
-}
-handleUsernameChangeSU= e => {
-  console.log(e.currentTarget.value)
-}
-handlePasswordChangeSU = e => {
-  console.log(e.currentTarget.value)
-}
-handleAvatarChange = e => {
-  console.log(e.currentTarget.value)
-}
-handleBirthdateChange = e => {
-  console.log(e.currentTarget.value)
-}
-handleBioChange = e => {
-  console.log(e.currentTarget.value)
+//doge
+handleDOBChange = date => {
+    this.setState({newUser: {
+      ...this.state.newUser,
+      birthdate: date
+    }
+  })
 }
 //doge
 hanleSignup = e => {
-  console.log('Need to do a post fetch to singup the new user')
+  console.log('Need to do a post fetch to singup the new user', this.state.newUser)
   e.preventDefault()
-  e.currentTarget.reset()
+  const newUser = {...this.state.newUser}
+  console.log('newUser', newUser)
+  const obj = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({newUser})
+  }
+  fetch(URL_USERS, obj)
+  .then(res => res.json())
+  .then(newUser => console.log(newUser))
+  .catch(err => console.warn(err))
+  // e.currentTarget.reset()
 }
 //end SignUp
 
@@ -149,26 +154,30 @@ handleLogOut = () =>{
             <SearchContainer 
             displayGame={this.displayGame}/>
           }/>
-          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
-          <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser}/> } />
+          <Route path='/users' component={UserList}/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange}
             handleLogin={this.handleLogin}
-            />}
-            />
-            <Route path='/signup' render={()=>  <SignUp
-              hanleSignup={this.hanleSignup}
-              /> }/>
-              <Route path='/profile' render={() => {return <UserDetails
-                user={this.state.currentUser}/>
-              }}/>
-              
-              <Route path='/:name' component={ GameDetails    }/>
-              <Route path='/' render={() => {   return <Home/>   }}/>
+           />}
+          />
+          <Route path='/signup' render={()=>  <SignUp
+            handleSUChange = {this.handleSUChange}
+            userAvatar = {this.state.newUser.user_avatar}
+            handleDOBChange={this.handleDOBChange}
+            hanleSignup={this.hanleSignup}
+            /> }
+          />
+          <Route path='/profile' render={() => {return <UserDetails
+              user={this.state.currentUser}/>
+          }}/>
 
-          </Switch>
-              
-              
-       </div>
-    ) }}
+          <Route path='/:name' component={ GameDetails    }/>
+          <Route path='/users/:id' component={ UserDetails }/>
+          <Route path='/' render={() => {   return <Home/>   }}/>
+        </Switch>
+
+      </div>
+    )
+  }
+}

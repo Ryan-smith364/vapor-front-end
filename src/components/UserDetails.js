@@ -14,19 +14,19 @@ export default class User extends React.Component{
           <h5>{this.props.user.birthdate}</h5> 
 
         {/* start */}
-        { this.props.user === this.props.currentUser ?
+        {/* { this.props.user === this.props.currentUser ? */}
 
-         /* user wishlist */
-        <div>
+         {/* user wishlist */ }
+        {/* <div> */}
           <ul>
             {/* forEach game that's owned boolean that's false */}
             
-            {this.props.user.games.filter(game => game.wishlist === true).map(game => <li>{game.name}</li>)}
+            {/* {this.props.user.games.filter(game => game.wishlist === true).map(game => <li>{game.name}</li>)} */}
           </ul>
 
-        </div> : null
+        {/* </div> : null */}
 
-          }
+        
         {/* end */}
 
 
@@ -34,7 +34,7 @@ export default class User extends React.Component{
 
           <ul>
              {/* forEach game that's owned boolean that's true */}
-            {this.props.user.games.filter(game => game.wishlist === false).map(game => <li>{game.name}</li>)}
+            {/* {this.props.user.games.filter(game => game.wishlist === false).map(game => <li>{game.name}</li>)} */}
           </ul> 
       
 

@@ -14,16 +14,16 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 class SignUp extends React.Component{
   state = {
-    startDate: new Date(),
-    defaultAvatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
-
-  };
+    startDate: new Date()
+  }
 
   handleChange = date => {
+    this.props.handleDOBChange(date)
     this.setState({
       startDate: date
-    });
-  };
+    })
+  }
+
   render(){
     return (
       <Container>
@@ -33,14 +33,16 @@ class SignUp extends React.Component{
               control={Input}
               label='First name'
               placeholder='First name'
-              onChange={this.props.handleFirstNameChange}
+              name='first_name'
+              onChange={this.props.handleSUChange}
               required
             />
             <Form.Field
               control={Input}
               label='Last name'
               placeholder='Last name'
-              onChange={this.props.handleLastNameChange}
+              name='last_name'
+              onChange={this.props.handleSUChange}
               required
             />
           </Form.Group>
@@ -49,7 +51,8 @@ class SignUp extends React.Component{
             control={Input}
             label='Username'
             placeholder='Username'
-            onChange={this.props.handleUsernameChangeSU}
+            name='username'
+            onChange={this.props.handleSUChange}
             required
             />
             <Form.Field
@@ -57,7 +60,8 @@ class SignUp extends React.Component{
             type='password'
             label='Password'
             placeholder='Password'
-            onChange={this.props.handlePasswordChangeSU}
+            name='password'
+            onChange={this.props.handleSUChange}
             required
             />
           </Form.Group>
@@ -68,27 +72,43 @@ class SignUp extends React.Component{
             control={Input}
             label='Email'
             placeholder='username@example.com'
-            error={{
-              content: 'Please enter a valid email address',
-              pointing: 'below',
-            }}
+            name='email'
+            onChange={this.props.handleSUChange}
+            required
             />
-            <Card color='grey' image={this.state.defaultAvatar} />
+          </Form.Group>
+          <Form.Group>
+            <Card
+              image={this.props.userAvatar}
+            />
+            <Form.Field
+            control={Input}
+            label='Avatar link address'
+            placeholder='someadress.com/img/avatar.jpg'
+            name='user_avatar'
+            onChange={this.props.handleSUChange}
+            />
           </Form.Group>
           <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
+            selected={this.state.startDate}
+            onChange={this.handleChange}
           />
           <Form.Field
           control={TextArea}
           label='About'
           placeholder='Tell us more about you...'
+          name='bio'
+          onChange={this.props.handleSUChange}
+          required
           />
           <Form.Field
             control={Checkbox}
             label='I agree to the Terms and Conditions'
           />
-          <Form.Field control={Button}>Submit</Form.Field>
+          <Form.Field control={Button}
+            type='submit'
+          >Submit
+          </Form.Field>
         </Form>
       </Container>
     )
