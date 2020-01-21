@@ -12,7 +12,7 @@ export default  class UserCard extends React.Component{
            <Card size="huge"  onClick={()=> this.props.viewUser(this.props.user)}>
             <Image src={this.props.user.user_avatar} wrapped ui={true} size='huge' />
             <Card.Content>
-              <Card.Header >  <Link to={`/users/${this.props.user.id}`} user={this.props.user}>{this.props.user.username}</Link> </Card.Header>
+              <Card.Header >  <Link to={`/users/${this.props.user.id}`}>{this.props.user.username}</Link> </Card.Header>
               <Card.Description>
                 
               </Card.Description>
