@@ -48,7 +48,7 @@ displayGame = (title) => {
 
 // start handleLogin
 handleUsernameChange = e => {
-  console.log('I am ', e.currentTarget.value);
+  // console.log('I am ', e.currentTarget.value);
   this.setState({
     username: e.currentTarget.value
   })
@@ -56,12 +56,11 @@ handleUsernameChange = e => {
 //doge
 
 handlePasswordChange = e => {
-  console.log('and my password is ', e.currentTarget.value);
+  // console.log('and my password is ', e.currentTarget.value);
   this.setState({
     password: e.currentTarget.value
   })
 }
-
 
 handleLogin = e => {
   e.preventDefault()
@@ -76,11 +75,44 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser => this.setState({currentUser}))
+  .then(currentUser => {
+    if (currentUser) {
+
+    }
+  })
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
 
+//handle SignUp
+handleFirstNameChange = e => {
+  console.log(e.currentTarget.value)
+}
+handleLastNameChange = e => {
+  console.log(e.currentTarget.value)
+}
+handleUsernameChange = e => {
+  console.log(e.currentTarget.value)
+}
+handlePasswordChange = e => {
+  console.log(e.currentTarget.value)
+}
+handleAvatarChange = e => {
+  console.log(e.currentTarget.value)
+}
+handleBirthdateChange = e => {
+  console.log(e.currentTarget.value)
+}
+handleBioChange = e => {
+  console.log(e.currentTarget.value)
+}
+//doge
+hanleSignup = e => {
+  console.log('Need to do a post fetch to singup the new user')
+  e.preventDefault()
+  e.currentTarget.reset()
+}
+//end SignUp
 
   render(){
     return (
@@ -90,12 +122,12 @@ handleLogin = e => {
 
         <Switch>
 
-          <Route path='/search' render={ () => (this.state.currentGame === {}) ? 
+          <Route path='/search' render={ () => (this.state.currentGame === {}) ?
             <Redirect to={`/games/details/${this.state.currentGame.id}`}
             render={ () =>  <GameDetails game={this.state.currentGame}/> }
-             /> 
+             />
             :
-           <SearchContainer 
+           <SearchContainer
             displayGame={this.displayGame}
 
             />
@@ -107,14 +139,16 @@ handleLogin = e => {
             handleLogin={this.handleLogin}
            />}
           />
-          <Route path='/profile' render={() => {return <UserDetails 
-              user={this.state.currentUser}/> 
+          <Route path='/signup' render={()=>  <SignUp
+            hanleSignup={this.hanleSignup}
+            /> }/>
+          <Route path='/profile' render={() => {return <UserDetails
+              user={this.state.currentUser}/>
           }}/>
 
           <Route path='/:name' component={ GameDetails    }/>
           <Route path='/users/:id' component={ UserDetails }/>
           <Route path='/' render={() => {   return <Home/>   }}/>
-          <Route path='/signup' render={()=>  <SignUp/> }/>
         </Switch>
 
       </div>

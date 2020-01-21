@@ -1,24 +1,48 @@
 import React from 'react'
+import {
+  Container,
+  Button,
+  Form,
+  Input
+} from 'semantic-ui-react'
 
-const Login = (props) => {
+const Login = props => {
   return (
-    <form className="ui mini form" onSubmit={(e) => {
-      // props.hideForm()
-      props.handleLogin(e)
-    }}>
-      <div className="two fields">
-        <div className="field">
-          <label>First Name</label>
-          <input placeholder="First Name" type="text" onChange={props.handleUsernameChange} required/>
-        </div>
-        <div className="field">
-          <label>Password</label>
-          <input placeholder="Password" type="password" onChange={props.handlePasswordChange} required/>
-        </div>
-      </div>
-      <input type='submit' className="ui submit button" value='Login'/>
-      <input type='button' className="ui submit button" onClick={props.hideForm} value='Cancel'/>
-    </form>
+    <Container>
+      <Form onSubmit={e => props.handleLogin(e)}>
+        <Form.Group widths='equal'>
+          <Form.Field
+            control={Input}
+            label='Username'
+            placeholder='Username'
+            onChange={props.handleUsernameChange}
+            required
+          >
+          </Form.Field>
+          <Form.Field
+            control={Input}
+            type='password'
+            label='Password'
+            placeholder='Password'
+            onChange={props.handlePasswordChange}
+            required
+          >
+          </Form.Field>
+          <Form.Field
+            control={Button}
+            type='submit'
+          >Submit
+          </Form.Field>
+          <Form.Field
+            control={Button}
+            type='button'
+            onClick={props.hideForm}
+          >Cancel
+          </Form.Field>
+        </Form.Group>
+      </Form>
+    </Container>
+
   )
 }
 
