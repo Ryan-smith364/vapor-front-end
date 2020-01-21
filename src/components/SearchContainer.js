@@ -10,6 +10,9 @@ export default  class SearchContainer extends React.Component{
     super( )
 
     this.state = {
+      page: 1,
+      search: '',
+      currentPage: null,
       searchedGames: [],
       currentGame: {}
     }
@@ -23,7 +26,7 @@ export default  class SearchContainer extends React.Component{
     event.currentTarget.firstElementChild.value = ''
 
     let search = game.split(" ").join("-")
-    
+    this.setState({search: search})
     this.fetchGameSearch(search)
 }
 
@@ -39,8 +42,35 @@ fetchGameSearch = (search) =>{
         }
       })
       .then(response => response.json())
-      .then(games => this.setState({searchedGames: games.results }))
+      .then(games => {
+        this.setState({currentPage: games})
+        this.setState({searchedGames: games.results })
+      })
       
+}
+
+changePage = (side) => {
+  if (side === 'next'){
+    this.setState({page: this.state.page + 1})
+  }
+  if (side === 'previous'){
+    this.setState({page: this.state.page - 1})
+  }
+
+  console.log(this.state.currentPage[side] )
+
+  if (this.state.currentPage[side]  !== null){
+  fetch(`https://rawg-video-games-database.p.rapidapi.com/games?page=${this.state.page}&search=${this.state.search}`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+      "x-rapidapi-key": "1e6e6d3cf5msh05b9ecae27dcaa2p1041d7jsn3cfa58828426"
+    }
+  })
+  .then(response => response.json())
+  .then(results => this.setState({searchedGames: results.results}))
+  .catch(err => console.log(err.message) )
+}
 }
 
 // displayGame = (title) => {
@@ -75,6 +105,26 @@ fetchGameSearch = (search) =>{
       <Divider/>
 
       <SearcheGameList games={this.state.searchedGames} displayGame={this.props.displayGame}/>
+
+      
+      { this.state.searchedGames.length === 0 ?
+    
+         null  :  <div class="ui buttons">
+        <button class="ui labeled icon button" onClick={()=> this.changePage('previous')}>
+          <i class="left chevron icon"></i>
+          Previous
+        </button>
+        <button class="ui button">
+    
+        </button>
+        <button class="ui right labeled icon button" onClick={()=> this.changePage('next')}>
+          Next
+          <i class="right chevron icon"></i>
+        </button>
+        </div>
+       }
+
+    
     </div>
       
   ) 

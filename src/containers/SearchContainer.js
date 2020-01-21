@@ -9,6 +9,7 @@ export default  class SearchContainer extends React.Component{
     super( )
 
     this.state = {
+      currentPage: null,
       searchedGames: []
     }
   }
@@ -37,7 +38,10 @@ fetchGameSearch = (search) =>{
         }
       })
       .then(response => response.json())
-      .then(games => this.setState({searchedGames: games.results }))
+      .then(games => {
+        console.log(games)
+        this.setState({searchedGames: games.results })
+      })
       
 }
 

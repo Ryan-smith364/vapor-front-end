@@ -16,6 +16,7 @@ const URL_USER = 'http://localhost:3000/user'
 
 export default  class App extends React.Component{
   state = {
+    
     currentGame: {},
     selectedUser: null,
     currentUser: null,
@@ -122,24 +123,30 @@ hanleSignup = e => {
 }
 //end SignUp
 
+handleLogOut = () =>{
+  this.setState({currentUser: null})
+  this.setState({username: null})
+  this.setState({password: null})
+}
+
   render(){
 
       
-
+    
     return (
       <div className="App">
 
-        <Head user={this.state.currentUser}/>
+        <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}/>
 
         <Switch>
 
-          <Route path={`/games/details/${this.state.currentGame.id}`} component={GameDetails} game={this.state.currentGame}/>
+          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails game={this.state.currentGame} currentUser={this.state.currentUser}/> } />
           <Route path='/search' render={ () =>
-          //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
-          //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
-          //    /> 
-          //   :
-           <SearchContainer 
+            //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
+            //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
+            //    /> 
+            //   :
+            <SearchContainer 
             displayGame={this.displayGame}/>
           }/>
           <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
@@ -148,20 +155,20 @@ hanleSignup = e => {
             handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange}
             handleLogin={this.handleLogin}
-           />}
-          />
-          <Route path='/signup' render={()=>  <SignUp
-            hanleSignup={this.hanleSignup}
-            /> }/>
-          <Route path='/profile' render={() => {return <UserDetails
-              user={this.state.currentUser}/>
-          }}/>
+            />}
+            />
+            <Route path='/signup' render={()=>  <SignUp
+              hanleSignup={this.hanleSignup}
+              /> }/>
+              <Route path='/profile' render={() => {return <UserDetails
+                user={this.state.currentUser}/>
+              }}/>
+              
+              <Route path='/:name' component={ GameDetails    }/>
+              <Route path='/' render={() => {   return <Home/>   }}/>
 
-          <Route path='/:name' component={ GameDetails    }/>
-          <Route path='/' render={() => {   return <Home/>   }}/>
-        </Switch>
-
-      </div>
-    )
-  }
-}
+          </Switch>
+              
+              
+       </div>
+    ) }}
