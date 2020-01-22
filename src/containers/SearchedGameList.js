@@ -1,6 +1,6 @@
 import React from 'react';
 import ApiGameCard from '../components/ApiGameCard'
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 
 
 export default class SearcheGameList extends React.Component{
@@ -8,10 +8,10 @@ export default class SearcheGameList extends React.Component{
 
     return (
      <Container>
-       <div className='ui grid'>
+       <Grid>
           {this.props.games !== [] ? this.props.games.map( game => <ApiGameCard game={game} displayGame={this.props.displayGame} setCurrent={this.props.setCurrent}/> ): null }
-       </div>
-     </Container>  
+       </Grid>
+     </Container>
     )
 
   }

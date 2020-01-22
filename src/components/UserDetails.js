@@ -8,7 +8,7 @@ export default class User extends React.Component{
     return (
         <Container>
           <Card>
-            <Image alt={this.props.user.username} src={this.props.user.user_avatar} size='small'/>
+            <Image alt={this.props.user.username} src={this.props.user.user_avatar} size='medium'/>
             <Card.Content>
               <Card.Header>{this.props.user.first_name} {this.props.user.last_name}</Card.Header>
               <Card.Meta>

@@ -1,7 +1,7 @@
 import React from 'react'
 import SearcheGameList from '../containers/SearchedGameList'
 import SearchForm from '../components/SearchForm'
-import { Divider } from 'semantic-ui-react'
+import { Divider, Container } from 'semantic-ui-react'
 
 
 export default  class SearchContainer extends React.Component{
@@ -20,9 +20,9 @@ export default  class SearchContainer extends React.Component{
 
   searchForGames = (event) => {
     event.preventDefault()
-    
+
     let game = event.currentTarget.firstElementChild.value
-    
+
     event.currentTarget.firstElementChild.value = ''
 
     let search = game.split(" ").join("-")
@@ -33,7 +33,7 @@ export default  class SearchContainer extends React.Component{
 
 
 fetchGameSearch = (search) =>{
-    
+
     fetch(`https://rawg-video-games-database.p.rapidapi.com/games?search=${search}`, {
         "method": "GET",
         "headers": {
@@ -46,7 +46,7 @@ fetchGameSearch = (search) =>{
         this.setState({currentPage: games})
         this.setState({searchedGames: games.results })
       })
-      
+
 }
 
 changePage = (side) => {
@@ -74,7 +74,7 @@ changePage = (side) => {
 }
 
 // displayGame = (title) => {
-  
+
 //     fetch(`https://rawg-video-games-database.p.rapidapi.com/games/${title}`, {
 //         "method": "GET",
 //         "headers": {
@@ -83,12 +83,12 @@ changePage = (side) => {
 //         }
 //       })
 //         .then(response => response.json())
-//         .then(game => 
+//         .then(game =>
 
 //           <Switch>
-//              <Route path='/games/details' render={ () => <GameDetails game={game}/> } /> 
+//              <Route path='/games/details' render={ () => <GameDetails game={game}/> } />
 //           </Switch>
-          
+
 //         )
 //         .catch(err => {
 //             console.log(err);
@@ -96,9 +96,9 @@ changePage = (side) => {
 // }
 
   render(){
-      
-  return ( 
-  
+
+  return (
+
     <div>
       <SearchForm search={this.searchForGames}/>
 
@@ -106,28 +106,26 @@ changePage = (side) => {
 
       <SearcheGameList games={this.state.searchedGames} displayGame={this.props.displayGame}/>
 
-      
-      { this.state.searchedGames.length === 0 ?
-    
-         null  :  <div class="ui buttons">
-        <button class="ui labeled icon button" onClick={()=> this.changePage('previous')}>
-          <i class="left chevron icon"></i>
-          Previous
-        </button>
-        <button class="ui button">
-    
-        </button>
-        <button class="ui right labeled icon button" onClick={()=> this.changePage('next')}>
-          Next
-          <i class="right chevron icon"></i>
-        </button>
-        </div>
-       }
 
-    
+      { this.state.searchedGames.length === 0
+        ? null
+        : <div className="ui buttons">
+            <button className="ui labeled icon button" onClick={()=> this.changePage('previous')}>
+              <i className="left chevron icon"></i>
+              Previous
+            </button>
+            <button className="ui button">
+
+            </button>
+            <button className="ui right labeled icon button" onClick={()=> this.changePage('next')}>
+              Next
+              <i className="right chevron icon"></i>
+            </button>
+          </div>
+      }
     </div>
-      
-  ) 
+
+  )
 
 }
 

@@ -13,6 +13,7 @@ import Home from './components/Home'
 import SignUp from './components/SignUp'
 const URL_USERS = 'http://localhost:3000/users'
 const URL_USER = 'http://localhost:3000/user'
+const URL_GAMES = 'http://localhost:3000/games'
 
 export default  class App extends React.Component{
   state = {
@@ -35,9 +36,10 @@ export default  class App extends React.Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/users')
+    fetch(URL_USERS)
     .then(resp => resp.json())
     .then(users => this.setState({userList: users}))
+    .catch(err => console.warn(err.message))
   }
 
 displayGame = (title) => {
@@ -97,8 +99,10 @@ handleLogin = e => {
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
   .then(currentUser => {
-    if (currentUser.message !== "user not found"){
+    if (currentUser.message !== 'Incorrect User or password!'){
       this.setState({currentUser})
+    }else {
+      alert('Wrong username or password')
     }
   })
   .catch(err => console.warn(err.message))
@@ -149,20 +153,58 @@ handleLogOut = () =>{
   this.setState({username: null})
   this.setState({password: null})
 }
+//doge
+handleSaveGame = (e, game) => {
+  e.preventDefault()
+  console.log('I need to save this game to the user_game table', game)
+  const {id: apiId, slug, name, description, genres, platforms, publishers, clip, released , rating, background_image} = game
+  const genresToSave = genres.map(g => g.name).join()
+  const platformsToSave = platforms.map(p  => p.platform.name).join()
+  console.log(platformsToSave)
+  const publishersToSave = publishers.map(p => p.name).join()
+  console.log(publishersToSave)
+  const clipToSave = clip.clip
+
+  const obj = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({
+      name: name,
+      slug: slug,
+      api_id: apiId,
+      description: description,
+      genres: genresToSave,
+      platforms: platformsToSave,
+      publisher: publishersToSave,
+      clip: clipToSave,
+      release: released,
+      rating: rating,
+      background_image: background_image
+    })
+  }
+
+  fetch(URL_GAMES, obj)
+  .then(res => res.json())
+  .then(savedGame => console.log(savedGame))
+  .catch(err => console.warn(err.message))
+}
 
   render(){
-
-
-
     return (
       <div className="App">
 
         <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}/>
-
         <Switch>
-
           <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
-          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails game={this.state.currentGame} currentUser={this.state.currentUser}/> } />
+          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails
+            key={this.state.currentGame.id}
+            game={this.state.currentGame} currentUser={this.state.currentUser}
+            handleSaveGame= {this.handleSaveGame}
+            /> }
+          />
           <Route path='/search' render={ () =>
             //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
             //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
@@ -171,7 +213,6 @@ handleLogOut = () =>{
             <SearchContainer
             displayGame={this.displayGame}/>
           }/>
-          
           <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser} /> }/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
@@ -191,9 +232,9 @@ handleLogOut = () =>{
             : <UserDetails user={this.state.currentUser} />
           }/>
 
-          <Route path='/:name' component={ GameDetails    }/>
+          {/*<Route path='/:name' component={ GameDetails    }/>*/}
 
-          <Route path='/' render={() => {   return <Home/>   }}/>
+          <Route path='/' render={() => <Home/>}/>
         </Switch>
 
       </div>
