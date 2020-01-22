@@ -84,7 +84,11 @@ handleLogin = e => {
   }
   fetch(URL_USER+'/login', obj)
   .then(res => res.json())
-  .then(currentUser =>{ if (currentUser.message !== "user not found"){    this.setState({currentUser})}})
+  .then(currentUser => {
+    if (currentUser.message !== "user not found"){
+      this.setState({currentUser})
+    }
+  })
   .catch(err => console.warn(err.message))
 }
 // end handleLogin
@@ -160,9 +164,10 @@ hanleSignup = e => {
             hanleSignup={this.hanleSignup}
             /> }
           />
-          <Route path='/profile' render={() => {return <UserDetails
-              user={this.state.currentUser}/>
-          }}/>
+          <Route path='/profile' render={() => (this.state.currentUser === null)
+            ? <Redirect to={'/login'} />
+            : <UserDetails user={this.state.currentUser} />
+          }/>
 
           <Route path='/:name' component={ GameDetails    }/>
           <Route path='/users/:id' component={ UserDetails }/>
