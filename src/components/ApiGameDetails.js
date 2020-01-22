@@ -2,13 +2,13 @@ import React from 'react';
 // import Game from './GameCard'
 
 
-export default  class GameDetails extends React.Component{
+export default  class ApiGameDetails extends React.Component{
     
     render(){
         console.log(this.props.game)
         return ( 
     
-        <div>
+        <div className="card">
            <h1> Gamer </h1>
 
            <div className="card bg-dark" style={{width: 31.5 + 'rem'}}>
@@ -31,7 +31,7 @@ export default  class GameDetails extends React.Component{
                  <p>{this.props.game.description_raw}</p>
          
   
-        </div>
+        </div><br></br>
           
         {this.props.currentUser !== null ?  <div>
            <input type="radio" name="save" value="owned" onChange={() => this.props.addToOwned}/>

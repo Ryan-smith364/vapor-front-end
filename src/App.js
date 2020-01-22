@@ -5,7 +5,7 @@ import Head from './components/Head'
 import 'semantic-ui-css/semantic.min.css'
 import {Route, Redirect, Switch} from 'react-router-dom'
 import SearchContainer from './components/SearchContainer'
-import GameDetails from './components/GameDetails'
+import ApiGameDetails from './components/ApiGameDetails'
 import UserList from './containers/UserList'
 import UserDetails from './components/UserDetails'
 import Login from './components/Login'
@@ -157,8 +157,8 @@ handleLogOut = () =>{
 
         <Switch>
 
-          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
-          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails game={this.state.currentGame} currentUser={this.state.currentUser}/> } />
+          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser} currentUser={this.state.currentUser}/> }/>
+          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <ApiGameDetails game={this.state.currentGame} currentUser={this.state.currentUser}/> } />
           <Route path='/search' render={ () =>
             //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
             //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
@@ -167,7 +167,7 @@ handleLogOut = () =>{
             <SearchContainer 
             displayGame={this.displayGame}/>
           }/>
-           <Route path='/profile' render={() => <UserDetails user={this.state.currentUser}/>}/>
+           <Route path='/profile' render={() => <UserDetails user={this.state.currentUser} currentUser={this.state.currentUser}/>}/>
           <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser} /> }/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
@@ -183,7 +183,7 @@ handleLogOut = () =>{
             /> }
           />
 
-          <Route path='/:name' component={ GameDetails    }/>
+          <Route path='/:name' component={ ApiGameDetails    }/>
           
           <Route path='/' render={() => {   return <Home/>   }}/>
         </Switch>
