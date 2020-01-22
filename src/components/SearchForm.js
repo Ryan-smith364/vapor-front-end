@@ -14,8 +14,8 @@ const SearchForm = (props) => {
           type="submit"
           value="SEARCH"
           className="searchBttn"
-          
         />
+        
       </form>
     </div>
   )

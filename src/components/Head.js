@@ -2,6 +2,7 @@ import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { Menu } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import Image from '../assets/vaporlogo.png'
 
 export default class Head extends React.Component{
   render(){
@@ -9,8 +10,8 @@ export default class Head extends React.Component{
       <Header as='h2'>
       {/* <Icon name='settings' /> */}
       <Header.Content>
-        <Link to='/'>Vapor</Link>
-        <Header.Subheader>For All You Gaming Needs</Header.Subheader>
+        <Link to='/' > Vapor </Link>
+        <Header.Subheader >For All You Gaming Needs</Header.Subheader>
       </Header.Content>
 
       <Menu>

@@ -1,12 +1,14 @@
 import React from 'react';
 import {Container, Card, Icon, Image} from 'semantic-ui-react'
 import Moment from 'moment'
+import UserGameCard from "./UserGameCard"
 
 export default class User extends React.Component{
   render(){
    console.log(this.props.user)
     return (
-        <Container>
+      <Container className="cont">
+        <Container className="user">
           <Card>
             <Image alt={this.props.user.username} src={this.props.user.user_avatar} size='medium'/>
             <Card.Content>
@@ -31,41 +33,38 @@ export default class User extends React.Component{
               </Card.Meta>
             </Card.Content>
 
-      {/* start */}
-        { this.props.user === this.props.currentUser ?
-       
-          //   user wishlist 
-       <div>
-
-          <h3>Wishlist</h3>
-          <ul>
-
-            {/* forEach game that's owned boolean that's false */}
-            {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
-
-           </ul>
-
-       </div> 
-        : null }
-
-
-   {/* end */}
-       
-       <div>
-        <h3>Owned</h3>
-            {/* user owned games */}
-
-        <ul>
-            {/* forEach game that's owned boolean that's true */}
-           {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
-        </ul>
-      </div>
+      
       
           </Card>
        </Container>
+
+<Container className="wish">
+
+             { this.props.user === this.props.currentUser ? 
+          <Card>
+            <Card.Content>
+             
+              <Card.Header>wishlist</Card.Header>
+             
+            </Card.Content>
+            <Card.Content>
+
+               <ul>
+
+                  {this.props.currentUser.games ? this.props.currentUser.games.map(game =>  <UserGameCard game={game} /> ) : null}
+
+              </ul>
+
+            </Card.Content>
+          </Card>
+        : null } 
+     
+      </Container>
+     <Container className="own">
+  
+    </Container> 
+  </Container>
+
     )
-
   }
-
 }
-

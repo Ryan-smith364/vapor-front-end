@@ -3,8 +3,10 @@ import {
   Container,
   Button,
   Form,
-  Input
+  Input,
+
 } from 'semantic-ui-react'
+
 
 const Login = props => {
   return (
@@ -28,6 +30,10 @@ const Login = props => {
             required
           >
           </Form.Field>
+
+          </Form.Group>
+          <Form.Group>
+        
           <Form.Field
             control={Button}
             type='submit'
@@ -39,6 +45,7 @@ const Login = props => {
             onClick={props.hideForm}
           >Cancel
           </Form.Field>
+          
         </Form.Group>
       </Form>
     </Container>

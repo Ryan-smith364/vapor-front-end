@@ -5,8 +5,6 @@ import {
   Checkbox,
   Form,
   Input,
-  Radio,
-  Select,
   Card,
   TextArea,
 } from 'semantic-ui-react'
@@ -76,6 +74,17 @@ class SignUp extends React.Component{
             onChange={this.props.handleSUChange}
             required
             />
+            
+            <Form.Field label="Birthday"/>   <br/> 
+            
+            <DatePicker
+              label="Birthday"
+              title="Birthday"
+              name="birthday"
+              selected={this.state.startDate}
+              onChange={this.handleChange}
+            />
+         
           </Form.Group>
           <Form.Group>
             <Card
@@ -89,10 +98,6 @@ class SignUp extends React.Component{
             onChange={this.props.handleSUChange}
             />
           </Form.Group>
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-          />
           <Form.Field
           control={TextArea}
           label='About'

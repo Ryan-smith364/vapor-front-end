@@ -3,7 +3,6 @@ import React from 'react';
 import {Container,
   Button,
   Form,
-  Input,
   Radio} from 'semantic-ui-react'
 
 export default  class GameDetails extends React.Component{
@@ -27,7 +26,7 @@ export default  class GameDetails extends React.Component{
             <h5>Genre(s) </h5>
             { this.props.game.genres.map(genre => <div> {genre.name} </div>) }
             <h5> Platforms:</h5>
-            {this.props.game.platforms.map(platform => <div>{platform.platform.name}, {platform.released_at} </div>)}<br></br>
+            {this.props.game.platforms.map(platform => <div>{platform.platform.name} </div>)}<br></br>
             <p>{this.props.game.description_raw}</p>
           </div>
 

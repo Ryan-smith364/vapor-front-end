@@ -4,7 +4,7 @@ import Head from './components/Head'
 // import MainView from './containers/MainView'
 import 'semantic-ui-css/semantic.min.css'
 import {Route, Redirect, Switch} from 'react-router-dom'
-import SearchContainer from './components/SearchContainer'
+import SearchContainer from './containers/SearchContainer'
 import ApiGameDetails from './components/ApiGameDetails'
 import UserList from './containers/UserList'
 import UserDetails from './components/UserDetails'
@@ -32,15 +32,31 @@ export default  class App extends React.Component{
       birthdate: new Date(),
       bio: null,
       user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
-    }
+    },
+    homeGames: null
   }
-
+  
   componentDidMount(){
     fetch(URL_USERS)
     .then(resp => resp.json())
     .then(users => this.setState({userList: users}))
     .catch(err => console.warn(err.message))
   }
+
+  componentDidMount(){
+  
+    fetch(`https://rawg-video-games-database.p.rapidapi.com/games?page=5&page_size=5`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+      "x-rapidapi-key": "1e6e6d3cf5msh05b9ecae27dcaa2p1041d7jsn3cfa58828426"
+    }
+  })
+  .then(response => response.json())
+  .then(results => this.setState({homeGames: results.results}))
+  .catch(err => console.log(err.message) )
+
+}
 
 displayGame = (title) => {
   console.log('hits')
@@ -163,7 +179,10 @@ handleSaveGame = (e, game) => {
   console.log(platformsToSave)
   const publishersToSave = publishers.map(p => p.name).join()
   console.log(publishersToSave)
-  const clipToSave = clip.clip
+
+  let clipToSave
+
+  if (clip === null){ clipToSave = null} else{ clipToSave = clip.clip }
 
   const obj = {
     method: 'POST',
@@ -229,12 +248,12 @@ handleSaveGame = (e, game) => {
           />
           <Route path='/profile' render={() => (this.state.currentUser === null)
             ? <Redirect to={'/login'} />
-            : <UserDetails user={this.state.currentUser} />
+            : <UserDetails user={this.state.currentUser} currentUser={this.state.currentUser} />
           }/>
 
           {/*<Route path='/:name' component={ GameDetails    }/>*/}
 
-          <Route path='/' render={() => <Home/>}/>
+          <Route path='/' render={() => <Home games={this.state.homeGames} displayGame={this.displayGame}/>}/>
         </Switch>
 
       </div>
