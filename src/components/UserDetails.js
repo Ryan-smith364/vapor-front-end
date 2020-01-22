@@ -28,14 +28,15 @@ export default class User extends React.Component{
             </Card.Content>
 
         {/* start */}
-        {/* if this.props.user === this.props.currentUser */}
-
-         {/* user wishlist */}
+        {/* { this.props.user === this.props.currentUser ? */}
 
            {/*<ul>*/}
             {/* forEach game that's owned boolean that's false */}
             {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
           {/*</ul>*/}
+
+        {/* </div> : null */}
+
 
         {/* end */}
 

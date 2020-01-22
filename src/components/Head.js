@@ -40,7 +40,7 @@ export default class Head extends React.Component{
 
         <Menu.Menu position='right'>
           {this.props.user !== null ? <Menu.Item>
-            <Link to='/logOut'>Login Out</Link>
+            <Link onClick={this.props.handleLogOut}>Login Out</Link>
           </Menu.Item>:<Menu.Item>
             <Link to='/login'>Login</Link>
           </Menu.Item>  }

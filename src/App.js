@@ -16,10 +16,12 @@ const URL_USER = 'http://localhost:3000/user'
 
 export default  class App extends React.Component{
   state = {
+
     currentGame: {},
     currentUser: null,
     username: null,
     password: null,
+    userList: [],
     newUser: {
       first_name: null,
       last_name: null,
@@ -30,6 +32,12 @@ export default  class App extends React.Component{
       bio: null,
       user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
     }
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:3000/users')
+    .then(resp => resp.json())
+    .then(users => this.setState({userList: users}))
   }
 
 displayGame = (title) => {
@@ -47,12 +55,16 @@ displayGame = (title) => {
       .then(currentGame => this.setState({currentGame}))
       .catch(err => {
           console.log(err);
-      });
+      })
 }
 
 // setCurrent = (game) => {
 //   this.setState({currentGame: game})
 // }
+
+viewUser = (selectedUser) => {
+  this.setState({selectedUser})
+}
 
 
 // start handleLogin
@@ -132,25 +144,35 @@ hanleSignup = e => {
 }
 //end SignUp
 
+handleLogOut = () =>{
+  this.setState({currentUser: null})
+  this.setState({username: null})
+  this.setState({password: null})
+}
+
   render(){
+
+
+
     return (
       <div className="App">
 
-        <Head user={this.state.currentUser}/>
+        <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}/>
 
         <Switch>
 
-          <Route path='/search' render={ () => (this.state.currentGame === {}) ?
-            <Redirect to={`/games/details/${this.state.currentGame.id}`}
-            render={ () =>  <GameDetails game={this.state.currentGame}/> }
-             />
-            :
-           <SearchContainer
-            displayGame={this.displayGame}
-
-            />
+          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
+          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails game={this.state.currentGame} currentUser={this.state.currentUser}/> } />
+          <Route path='/search' render={ () =>
+            //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
+            //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
+            //    />
+            //   :
+            <SearchContainer
+            displayGame={this.displayGame}/>
           }/>
-          <Route path='/users' component={UserList}/>
+           <Route path='/profile' render={() => <UserDetails user={this.state.currentUser}/>}/>
+          <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser} /> }/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange}
@@ -170,7 +192,7 @@ hanleSignup = e => {
           }/>
 
           <Route path='/:name' component={ GameDetails    }/>
-          <Route path='/users/:id' component={ UserDetails }/>
+
           <Route path='/' render={() => {   return <Home/>   }}/>
         </Switch>
 
