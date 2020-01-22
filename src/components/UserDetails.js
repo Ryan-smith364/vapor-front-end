@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Card, Icon, Image} from 'semantic-ui-react'
+import Moment from 'moment'
 
 export default class User extends React.Component{
   render(){
@@ -11,7 +12,9 @@ export default class User extends React.Component{
             <Card.Content>
               <Card.Header>{this.props.user.first_name} {this.props.user.last_name}</Card.Header>
               <Card.Meta>
-                <span className='date'>Birthday {this.props.user.birthdate}</span>
+                <Icon name='birthday' />
+                <span className='date'>Birthday {Moment(this.props.user.birthdate).format('MMMM Do YYYY')}
+                </span>
               </Card.Meta>
               <Card.Description>
                 {this.props.user.bio}
@@ -19,11 +22,12 @@ export default class User extends React.Component{
             </Card.Content>
             <Card.Content extra>
               <a>
-                <Icon name='email' />
+                <Icon name='mail' />
                 {this.props.user.email}
               </a>
               <Card.Meta>
-                <span>Username: {this.props.user.username}</span>
+                <Icon name='user' />
+                Username: {this.props.user.username}
               </Card.Meta>
             </Card.Content>
 

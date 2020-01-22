@@ -171,7 +171,7 @@ handleLogOut = () =>{
             <SearchContainer
             displayGame={this.displayGame}/>
           }/>
-           <Route path='/profile' render={() => <UserDetails user={this.state.currentUser}/>}/>
+          
           <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser} /> }/>
           <Route path='/login' render={ () => <Login
             handleUsernameChange={this.handleUsernameChange}
