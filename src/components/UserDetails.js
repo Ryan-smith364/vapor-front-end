@@ -31,26 +31,36 @@ export default class User extends React.Component{
               </Card.Meta>
             </Card.Content>
 
-        {/* start */}
-        {/* { this.props.user === this.props.currentUser ? */}
+      {/* start */}
+        { this.props.user === this.props.currentUser ?
+       
+          //   user wishlist 
+       <div>
 
-           {/*<ul>*/}
+          <h3>Wishlist</h3>
+          <ul>
+
             {/* forEach game that's owned boolean that's false */}
             {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
-          {/*</ul>*/}
 
-        {/* </div> : null */}
+           </ul>
+
+       </div> 
+        : null }
 
 
-        {/* end */}
+   {/* end */}
+       
+       <div>
+        <h3>Owned</h3>
+            {/* user owned games */}
 
-
-         {/* user owned games */}
-
-          {/*<ul>*/}
-             {/* forEach game that's owned boolean that's true */}
-            {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
-          {/*</ul>*/}
+        <ul>
+            {/* forEach game that's owned boolean that's true */}
+           {/* {this.props.user.games.map(game => <li>{game.name}</li>)} */}
+        </ul>
+      </div>
+      
           </Card>
        </Container>
     )
@@ -58,3 +68,4 @@ export default class User extends React.Component{
   }
 
 }
+

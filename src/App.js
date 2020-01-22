@@ -5,7 +5,7 @@ import Head from './components/Head'
 import 'semantic-ui-css/semantic.min.css'
 import {Route, Redirect, Switch} from 'react-router-dom'
 import SearchContainer from './components/SearchContainer'
-import GameDetails from './components/GameDetails'
+import ApiGameDetails from './components/ApiGameDetails'
 import UserList from './containers/UserList'
 import UserDetails from './components/UserDetails'
 import Login from './components/Login'
@@ -199,7 +199,7 @@ handleSaveGame = (e, game) => {
         <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}/>
         <Switch>
           <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
-          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <GameDetails
+          <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <ApiGameDetails
             key={this.state.currentGame.id}
             game={this.state.currentGame} currentUser={this.state.currentUser}
             handleSaveGame= {this.handleSaveGame}
