@@ -14,10 +14,11 @@ import SignUp from './components/SignUp'
 const URL_USERS = 'http://localhost:3000/users'
 const URL_USER = 'http://localhost:3000/user'
 const URL_GAMES = 'http://localhost:3000/games'
+const URL_USER_GAMES = 'http://localhost:3000/user_games'
+
 
 export default  class App extends React.Component{
   state = {
-
     currentGame: {},
     currentUser: null,
     username: null,
@@ -33,17 +34,22 @@ export default  class App extends React.Component{
       bio: null,
       user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
     },
-    homeGames: null
+    homeGames: null,
+    wishlist: false,
+    finished: false,
+    user_what: null,
+
   }
   
   componentDidMount(){
     fetch(URL_USERS)
     .then(resp => resp.json())
     .then(users => this.setState({userList: users}))
+    .then(games => this.setHomeGames())
     .catch(err => console.warn(err.message))
   }
 
-  componentDidMount(){
+  setHomeGames = () => {
   
     fetch(`https://rawg-video-games-database.p.rapidapi.com/games?page=5&page_size=5`, {
     "method": "GET",
@@ -103,7 +109,7 @@ handlePasswordChange = e => {
 
 handleLogin = e => {
   e.preventDefault()
-  console.log('log me in please you MF developer ', e)
+  console.log('log me in please you MF developer ')
   const obj = {
     method: 'POST',
     headers: {
@@ -144,7 +150,7 @@ handleDOBChange = date => {
 }
 //doge
 hanleSignup = e => {
-  console.log('Need to do a post fetch to singup the new user', this.state.newUser)
+  // console.log('Need to do a post fetch to singup the new user', this.state.newUser)
   e.preventDefault()
   const newUser = {...this.state.newUser}
   console.log('newUser', newUser)
@@ -172,8 +178,8 @@ handleLogOut = () =>{
 //doge
 handleSaveGame = (e, game) => {
   e.preventDefault()
-  console.log('I need to save this game to the user_game table', game)
-  const {id: apiId, slug, name, description, genres, platforms, publishers, clip, released , rating, background_image} = game
+  // console.log('I need to save this game to the user_game table', game)
+  const {id: api_id, slug, name, description, genres, platforms, publishers, clip, released , rating, background_image} = game
   const genresToSave = genres.map(g => g.name).join()
   const platformsToSave = platforms.map(p  => p.platform.name).join()
   console.log(platformsToSave)
@@ -193,7 +199,7 @@ handleSaveGame = (e, game) => {
     body: JSON.stringify({
       name: name,
       slug: slug,
-      api_id: apiId,
+      api_id: api_id,
       description: description,
       genres: genresToSave,
       platforms: platformsToSave,
@@ -207,9 +213,40 @@ handleSaveGame = (e, game) => {
 
   fetch(URL_GAMES, obj)
   .then(res => res.json())
-  .then(savedGame => console.log(savedGame))
+  .then(savedGame => {
+    console.log('saved game is: ',savedGame)
+    console.log('game id is:', savedGame.id)
+    console.log('user id is:', this.state.currentUser.id)
+    const gameID = savedGame.id
+    const userID = this.state.currentUser.id
+    const userWhat = (this.state.user_what === 'wishlist') ? true : false
+    const addUserGame = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: userID,
+        game_id: gameID,
+        user_what: userWhat,
+      })
+    }
+    fetch(URL_USER_GAMES, addUserGame)
+    .then(res => res.json())
+    .then(userGame => console.log(userGame))
+    .catch(err => console.warn(err))
+  })
   .catch(err => console.warn(err.message))
 }
+
+// handleWhislist = e => {
+//   console.log('user what is ', e.currentTarget.firstElementChild.value)
+//   this.setState({
+//     wishlist: !this.state.wishlist,
+//     user_what: e.currentTarget.firstElementChild.value
+//   })
+// }
 
   render(){
     return (
@@ -222,6 +259,8 @@ handleSaveGame = (e, game) => {
             key={this.state.currentGame.id}
             game={this.state.currentGame} currentUser={this.state.currentUser}
             handleSaveGame= {this.handleSaveGame}
+            handleWhislist={this.handleWhislist}
+            userWhat= {this.state.user_what}
             /> }
           />
           <Route path='/search' render={ () =>
@@ -247,7 +286,7 @@ handleSaveGame = (e, game) => {
             /> }
           />
           <Route path='/profile' render={() => (this.state.currentUser === null)
-            ? <Redirect to={'/login'} />
+            ? <Redirect to={'/login'} /> 
             : <UserDetails user={this.state.currentUser} currentUser={this.state.currentUser} />
           }/>
 

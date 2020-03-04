@@ -3,12 +3,14 @@ import React from 'react';
 import {Container,
   Button,
   Form,
+  Input,
+  Select,
   Radio} from 'semantic-ui-react'
 
 export default  class GameDetails extends React.Component{
 
     render(){
-        console.log(this.props.handleSaveGame)
+        // console.log(this.props)
         return (
 
         <Container>
@@ -31,16 +33,10 @@ export default  class GameDetails extends React.Component{
           </div>
 
           {this.props.currentUser !== null
-            ? <Form onSubmit={e => this.props.handleSaveGame(e, this.props.game)}>
-                <Radio label='Add to owned games' name='save'
-                  onChange={() => this.props.handleAdd(false)} toggle
-                />
-                <Radio label='Add to wishlist' name='save'
-                  onChange={() => this.props.handleAdd(true)} toggle
-                />
+            ? <Form onSubmit={e =>this.props.handleSaveGame(e, this.props.game)}>
                 <Form.Field control={Button}
-                type='submit'
-                >Submit
+                  type='submit'
+                  >Add To Wishlist
                 </Form.Field>
               </Form>
             : null
