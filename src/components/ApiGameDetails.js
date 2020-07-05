@@ -1,11 +1,10 @@
 import React from 'react';
 // import Game from './GameCard'
-import {Container,
+import {
+  Container,
   Button,
   Form,
-  Input,
-  Select,
-  Radio} from 'semantic-ui-react'
+    } from 'semantic-ui-react'
 
 export default  class GameDetails extends React.Component{
 

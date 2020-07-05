@@ -39,12 +39,6 @@ const Login = props => {
             type='submit'
           >Submit
           </Form.Field>
-          <Form.Field
-            control={Button}
-            type='button'
-            onClick={props.hideForm}
-          >Cancel
-          </Form.Field>
           
         </Form.Group>
       </Form>

@@ -1,7 +1,9 @@
 import React from 'react';
 import {Header} from 'semantic-ui-react';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Modal, Button} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import Login from './Login'
+import SignUp from './SignUp';
 
 export default class Head extends React.Component{
   render(){
@@ -39,15 +41,27 @@ export default class Head extends React.Component{
           {this.props.user !== null ? <Menu.Item>
             <Link onClick={this.props.handleLogOut}>Login Out</Link>
           </Menu.Item>:<Menu.Item>
-            <Link to='/login'>Login</Link>
+          <Modal trigger={<Button >Login</Button>} closeIcon>
+                <Modal.Content>
+                   <Login
+                    handleUsernameChange={this.props.handleUsernameChange}
+                    handlePasswordChange={this.props.handlePasswordChange}
+                    handleLogin={this.props.handleLogin}
+                   />
+                </Modal.Content>
+             </Modal>
           </Menu.Item>  }
           {this.props.user === null ? 
           <Menu.Item>
-            
-            {/* // active={activeItem === 'logout'} */}
-
-          <Link to='/signup'>SignUp</Link>
-            </Menu.Item>
+             <Modal trigger={<Button >SignUp</Button>} closeIcon>
+                <Modal.Content>
+                   <SignUp  
+                    handleSUChange = {this.props.handleSUChange}
+                    handleDOBChange={this.props.handleDOBChange}
+                    handleSignup={this.props.handleSignup}/>
+                </Modal.Content>
+             </Modal>
+          </Menu.Item>
            : null }
     
         </Menu.Menu>

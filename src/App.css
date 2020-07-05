@@ -78,3 +78,68 @@ a{
 Link{
   color: blue;
 }
+
+ .card{
+  outline:  rgb(134, 65, 8) ridge thick;
+  margin-left: 10px;
+  height: 300px;
+  margin-bottom: 50px;
+} 
+
+video{
+  width: 90%;
+}
+
+.grid{
+  height: 600px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+
+
+.App {
+  background-color: #282c34;
+  text-align: center;
+  justify-content: center; 
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #0aedf5;
+}
+
+
+ .gameHead{
+  outline: rgb(134, 65, 8) ridge ; 
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+} 
+
+ nav{
+  height: 100px;
+} 
+
+ .consleText{
+  margin: .1px;
+  font-size: small;
+} 
+
+ .grid{
+  height: 600px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-left: auto;
+  margin-right: auto;
+} 
+
+
+
+.card-body{
+  overflow-x: auto; 
+
+}  

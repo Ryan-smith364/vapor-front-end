@@ -25,7 +25,7 @@ class SignUp extends React.Component{
   render(){
     return (
       <Container>
-        <Form onSubmit={e => this.props.hanleSignup(e)}>
+        <Form onSubmit={e => this.props.handleSignup(e)}>
           <Form.Group >
             <Form.Field
               control={Input}

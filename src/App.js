@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import Head from './components/Head'
-// import MainView from './containers/MainView'
 import 'semantic-ui-css/semantic.min.css'
 import {Route, Redirect, Switch} from 'react-router-dom'
+import UserGameDetails from './components/userGameDetails'
 import SearchContainer from './containers/SearchContainer'
 import ApiGameDetails from './components/ApiGameDetails'
 import UserList from './containers/UserList'
@@ -21,6 +21,7 @@ export default  class App extends React.Component{
   state = {
     currentGame: {},
     currentUser: null,
+    userGames: [],
     username: null,
     password: null,
     userList: [],
@@ -33,12 +34,16 @@ export default  class App extends React.Component{
       birthdate: new Date(),
       bio: null,
       user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
-    },
-    homeGames: null,
-    wishlist: false,
-    finished: false,
-    user_what: null,
+    }
+    // homeGames: null,
+    // wishlist: false,
+    // finished: false,
+    // user_what: null,
 
+  }
+
+  setGame = (game) => {
+    this.setState({currentGame: game})
   }
   
   componentDidMount(){
@@ -82,26 +87,20 @@ displayGame = (title) => {
       })
 }
 
-// setCurrent = (game) => {
-//   this.setState({currentGame: game})
-// }
-
 viewUser = (selectedUser) => {
   this.setState({selectedUser})
 }
 
-
 // start handleLogin
 handleUsernameChange = e => {
-  // console.log('I am ', e.currentTarget.value);
+
   this.setState({
     username: e.currentTarget.value
   })
 }
-//doge
 
 handlePasswordChange = e => {
-  // console.log('and my password is ', e.currentTarget.value);
+  
   this.setState({
     password: e.currentTarget.value
   })
@@ -123,6 +122,7 @@ handleLogin = e => {
   .then(currentUser => {
     if (currentUser.message !== 'Incorrect User or password!'){
       this.setState({currentUser})
+      this.setState({userGames: currentUser.games})
     }else {
       alert('Wrong username or password')
     }
@@ -133,14 +133,14 @@ handleLogin = e => {
 
 //handle SignUp
 handleSUChange = e => {
-  // debugger
+
   console.log(e.currentTarget.value)
   this.setState({ newUser: {
     ...this.state.newUser,
     [e.currentTarget.name]: e.currentTarget.value}
   })
 }
-//doge
+
 handleDOBChange = date => {
     this.setState({newUser: {
       ...this.state.newUser,
@@ -148,9 +148,9 @@ handleDOBChange = date => {
     }
   })
 }
-//doge
-hanleSignup = e => {
-  // console.log('Need to do a post fetch to singup the new user', this.state.newUser)
+
+handleSignup = e => {
+  
   e.preventDefault()
   const newUser = {...this.state.newUser}
   console.log('newUser', newUser)
@@ -164,9 +164,11 @@ hanleSignup = e => {
   }
   fetch(URL_USERS, obj)
   .then(res => res.json())
-  .then(newUser => console.log(newUser))
+  .then(newUser => {
+    this.setState({currentUser: newUser})
+    this.setState({userList: [...this.state.userList, newUser]})
+  })
   .catch(err => console.warn(err))
-  // e.currentTarget.reset()
 }
 //end SignUp
 
@@ -175,21 +177,19 @@ handleLogOut = () =>{
   this.setState({username: null})
   this.setState({password: null})
 }
-//doge
+
 handleSaveGame = (e, game) => {
   e.preventDefault()
-  // console.log('I need to save this game to the user_game table', game)
-  const {id: api_id, slug, name, description, genres, platforms, publishers, clip, released , rating, background_image} = game
+  const {id: api_id, slug, name, description_raw , genres, platforms, publishers, clip, released , rating, background_image} = game
   const genresToSave = genres.map(g => g.name).join()
   const platformsToSave = platforms.map(p  => p.platform.name).join()
-  console.log(platformsToSave)
   const publishersToSave = publishers.map(p => p.name).join()
-  console.log(publishersToSave)
-
   let clipToSave
 
   if (clip === null){ clipToSave = null} else{ clipToSave = clip.clip }
 
+  console.log(background_image)
+  console.log(rating)
   const obj = {
     method: 'POST',
     headers: {
@@ -200,13 +200,13 @@ handleSaveGame = (e, game) => {
       name: name,
       slug: slug,
       api_id: api_id,
-      description: description,
+      description: description_raw,
       genres: genresToSave,
       platforms: platformsToSave,
       publisher: publishersToSave,
       clip: clipToSave,
       release: released,
-      rating: rating,
+      rating: rating.toString(),
       background_image: background_image
     })
   }
@@ -234,7 +234,7 @@ handleSaveGame = (e, game) => {
     }
     fetch(URL_USER_GAMES, addUserGame)
     .then(res => res.json())
-    .then(userGame => console.log(userGame))
+    .then(userGame => this.setState({userGames: [...this.state.userGames, game]}))
     .catch(err => console.warn(err))
   })
   .catch(err => console.warn(err.message))
@@ -242,19 +242,30 @@ handleSaveGame = (e, game) => {
 
 // handleWhislist = e => {
 //   console.log('user what is ', e.currentTarget.firstElementChild.value)
-//   this.setState({
-//     wishlist: !this.state.wishlist,
-//     user_what: e.currentTarget.firstElementChild.value
-//   })
+//   console.log(e)
+//   // this.setState({
+//   //   // wishlist: !this.state.wishlist,
+//   //   // user_what: e.currentTarget.firstElementChild.value
+//   // })
 // }
 
   render(){
     return (
       <div className="App">
 
-        <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}/>
+        <Head user={this.state.currentUser} handleLogOut={this.handleLogOut}  
+            handleSUChange = {this.handleSUChange}
+            userAvatar = {this.state.newUser.user_avatar}
+            handleDOBChange={this.handleDOBChange}
+            handleSignup={this.handleSignup}
+            handleUsernameChange={this.handleUsernameChange}
+            handlePasswordChange={this.handlePasswordChange}
+            handleLogin={this.handleLogin}
+            />
+
         <Switch>
-          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser}/> }/>
+
+          <Route path='/users/:id' render={() => <UserDetails user={this.state.selectedUser} games={this.state.userGames}/> }/>
           <Route path={`/games/details/${this.state.currentGame.id}`} render={() => <ApiGameDetails
             key={this.state.currentGame.id}
             game={this.state.currentGame} currentUser={this.state.currentUser}
@@ -263,13 +274,13 @@ handleSaveGame = (e, game) => {
             userWhat= {this.state.user_what}
             /> }
           />
+             <Route path={`/userGames/details/${this.state.currentGame.id}`} render={() => <UserGameDetails
+            key={this.state.currentGame.id}
+            game={this.state.currentGame} currentUser={this.state.currentUser}
+            /> }
+          />
           <Route path='/search' render={ () =>
-            //   <Redirect to={`/games/details/${this.state.currentGame.id}`}
-            //   render={ () =>  <GameDetails game={this.state.currentGame}/> }
-            //    />
-            //   :
-            <SearchContainer
-            displayGame={this.displayGame}/>
+            <SearchContainer  displayGame={this.displayGame}/>
           }/>
           <Route path='/users' render={() => <UserList users={this.state.userList} viewUser={this.viewUser} /> }/>
           <Route path='/login' render={ () => <Login
@@ -282,17 +293,15 @@ handleSaveGame = (e, game) => {
             handleSUChange = {this.handleSUChange}
             userAvatar = {this.state.newUser.user_avatar}
             handleDOBChange={this.handleDOBChange}
-            hanleSignup={this.hanleSignup}
+            handleSignup={this.handleSignup}
             /> }
           />
           <Route path='/profile' render={() => (this.state.currentUser === null)
             ? <Redirect to={'/login'} /> 
-            : <UserDetails user={this.state.currentUser} currentUser={this.state.currentUser} />
+            : <UserDetails user={this.state.currentUser} currentUser={this.state.currentUser} games={this.state.userGames} setGame={this.setGame}/>
           }/>
-
-          {/*<Route path='/:name' component={ GameDetails    }/>*/}
-
           <Route path='/' render={() => <Home games={this.state.homeGames} displayGame={this.displayGame}/>}/>
+
         </Switch>
 
       </div>

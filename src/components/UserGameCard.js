@@ -10,11 +10,11 @@ export default  class UserGameCard extends React.Component{
     return (
       // <Card.Group>
         <div className="card">
-           <Card onClick={ () => this.props.displayGame(this.props.game.slug)}>
+           <Card onClick={ () => this.props.setGame(this.props.game)}>
             <Image src={this.props.game.background_image} wrapped ui={true} size='huge' />
             <Card.Content>
               <Card.Header >
-                <Link to={`/games/details/${this.props.game.id}`} game={this.props.game}> {this.props.game.name} </Link>
+                <Link to={`/userGames/details/${this.props.game.id}`} game={this.props.game}> {this.props.game.name} </Link>
               </Card.Header>
               <Card.Meta>
                 <span className='date'>{this.props.game.release}</span>
