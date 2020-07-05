@@ -35,7 +35,7 @@ export default  class App extends React.Component{
       bio: null,
       user_avatar: 'https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png',
     }
-    // homeGames: null,
+    // homeGames: nul
     // wishlist: false,
     // finished: false,
     // user_what: null,
